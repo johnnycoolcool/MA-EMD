@@ -9,6 +9,48 @@ The core functionalities include:
 2. Achieving frequency alignment of Intrinsic Mode Functions (IMFs) (decomposed subsequences) across different variables using Kullback-Leibler (KL) divergence, based on the intrinsic frequency components of the target variable;
 3. Constructing an MA-EMD-based decomposition-ensemble forecasting model to improve both prediction accuracy and computational efficiency;
 4. Supporting integration with mainstream predictors such as SVR and LSTM, and being applicable to multivariate time-series forecasting tasks in various fields including climate, power systems, and exchange rates.
+## Code Input and Output
+
+### 1. Input
+The code accepts structured multivariate time-series data with the following requirements:
+
+Data Format: Tabular data (e.g., CSV, Excel, or NumPy array), where each column represents a distinct variable (one target variable + multiple related variables) and each row represents a time step (sorted in chronological order).
+
+Data Scope: Consistent with the datasets validated in the paper, including but not limited to:
+
+    Climate data (e.g., Jena Climate dataset: 14 variables including air temperature, atmospheric pressure, humidity) ;
+    
+    Power system data (e.g., ETT dataset: 7 variables including transformer load and oil temperature) ;
+    
+    Financial data (e.g., Exchange Rate dataset: 8 variables of daily exchange rates for different countries) .
+    
+Data Preprocessing Requirement: Raw data should be preprocessed (missing value imputation, outlier removal) in advance. The code will automatically standardize the data to zero mean and unit variance during execution.
+
+Key Parameters:
+
+    target_var_name: Name/index of the target variable (e.g., "temperature" for climate data, "oil_temperature" for ETT data) ;
+    
+    lookback_window: Length of the historical time window used for forecasting (e.g., 24 for hourly data to capture daily trends, 7 for daily data to capture weekly patterns) ;
+    
+    omega (ω): Threshold for partial decomposition (controls the minimum number of extrema required for a valid IMF, default set to 50 as recommended in the paper) .
+
+### 2. Output
+
+The code generates multiple types of outputs to support result analysis and application:
+
+Intermediate Outputs:
+
+    Decomposed IMFs: A dictionary where each key is a variable name, and the value is a NumPy array of IMFs (shape: [number of IMFs, number of time steps]) ;
+
+    Aligned IMF groups: A list of subgroups, where each subgroup contains one IMF from the target variable and its aligned IMFs from related variables (structure consistent with Tables 4–7 in the paper) ;
+
+    Decomposition & alignment logs: Text file recording execution time (e.g., EMD decomposition time, KL divergence calculation time) for computational efficiency analysis .
+
+Final Outputs:
+
+    Forecasting results: A NumPy array of predicted values for the target variable (shape: [number of test time steps, 1]), along with evaluation metrics (RMSE, MAE, MAPE, R²) compared to actual values ;
+
+    Visualization plots: Line charts comparing predicted values (MA-EMD-DEM, N-MA-EMD-DEM, MEMD-DEM) with actual values, and bar charts of evaluation metrics across different models .
 
 ## Core Theories of the Paper
 1. Limitations of Existing Methods
