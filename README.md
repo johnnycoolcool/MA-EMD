@@ -48,9 +48,7 @@ Intermediate Outputs:
 
 Final Outputs:
 
-    Forecasting results: A NumPy array of predicted values for the target variable (shape: [number of test time steps, 1]), along with evaluation metrics (RMSE, MAE, MAPE, R²) compared to actual values ;
-
-    Visualization plots: Line charts comparing predicted values (MA-EMD-DEM, N-MA-EMD-DEM, MEMD-DEM) with actual values, and bar charts of evaluation metrics across different models .
+    The IMF grouping results of multivariate variables after independent decomposition and KL divergence alignment. Researchers can adapt any forecasting model based on these groupings.
 
 ## Core Theories of the Paper
 1. Limitations of Existing Methods
